@@ -1,24 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
 
 function App() {
+
+//State
+const [error, capturarError] = useState(false);
+const [usuarios, guardarUsuarios] = useState({});
+
+/** Obtengo la lista de usuarios */
+
+const obtenerUsuarios = () => {
+  
+  const url = 'https://jsonplaceholder.typicode.com/users/';
+
+  fetch(url)
+    .then(response => {
+      if(response.status >= 200 && response.status < 300){
+        console.log(response.status);
+        return response.json(); 
+      }else{
+
+        console.log(response.status);
+        // capturarError(true);
+      }
+    })
+    .then(jsonUsuarios => { 
+      
+      //Guardo el listado de los usuarios
+      guardarUsuarios(jsonUsuarios);
+      console.log(jsonUsuarios);
+
+    });
+
+}
+
+obtenerUsuarios();
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
     </div>
   );
 }
