@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 function App() {
 
@@ -9,18 +9,18 @@ const [usuarios, guardarUsuarios] = useState({});
 /** Obtengo la lista de usuarios */
 
 const obtenerUsuarios = () => {
-  
+    
   const url = 'https://jsonplaceholder.typicode.com/users/';
 
   fetch(url)
     .then(response => {
       if(response.status >= 200 && response.status < 300){
-        console.log(response.status);
+        // console.log(response.status);
         return response.json(); 
       }else{
 
         console.log(response.status);
-        // capturarError(true);
+        capturarError(true);
       }
     })
     .then(jsonUsuarios => { 
@@ -33,12 +33,17 @@ const obtenerUsuarios = () => {
 
 }
 
-obtenerUsuarios();
+useEffect(() => {
+
+  obtenerUsuarios();
+
+}, [error]);
+
 
 
   return (
     <div className="App">
-
+      
     </div>
   );
 }
